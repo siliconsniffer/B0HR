@@ -46,12 +46,12 @@ function addAtom() {
   
 }
 
-function addElektron(){
+
   const elektronGeo = new THREE.SphereGeometry(7.5,32,16)
   const elektronMat = new THREE.MeshStandardMaterial({color: 0x0006FF})
   const elektron = new THREE.Mesh( elektronGeo, elektronMat);
   scene.add(elektron)
-}
+
 
 function addStar() {
   const geometry = new THREE.SphereGeometry(0.25, 25,25);
