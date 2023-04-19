@@ -15,9 +15,9 @@ camera.position.setZ(30);
 renderer.render( scene, camera );
 
 //Obama in the middle
-const geometry = new THREE.SphereGeometry( 5, 32, 32, 100)
-const texture = new THREE.TextureLoader().load("obama.png")
-const material = new THREE.MeshStandardMaterial( {map: texture});
+const geometry = new THREE.SphereGeometry( 2.5, 32, 32, 100)
+//const texture = new THREE.TextureLoader().load("obama.png")
+const material = new THREE.MeshStandardMaterial( {color: 0xffffff});
 const sphere = new THREE.Mesh( geometry, material );
 scene.add(sphere)
 
@@ -39,21 +39,20 @@ scene.add(/*lightHelper,*/ gridHelper)
 const controls = new OrbitControls(camera, renderer.domElement);
 
 function addAtom() {
-  const geometry = new THREE.SphereGeometry(10, 25,25);
+  const geometry = new THREE.SphereGeometry(5, 25,25);
   const material = new THREE.MeshStandardMaterial( { color: 0x0006FF} )
   const nukleon = new THREE.Mesh( geometry, material);
 
-  
 }
 
 
-  const elektronGeo = new THREE.SphereGeometry(7.5,32,16)
+  const elektronGeo = new THREE.SphereGeometry(3,32,16)
   const elektronMat = new THREE.MeshStandardMaterial({color: 0x0006FF})
   const elektron = new THREE.Mesh( elektronGeo, elektronMat);
   scene.add(elektron)
 
 
-function addStar() {
+/*function addStar() {
   const geometry = new THREE.SphereGeometry(0.25, 25,25);
   const material = new THREE.MeshStandardMaterial( { color: 0xffffff} )
   const star = new THREE.Mesh( geometry, material);
@@ -65,7 +64,7 @@ function addStar() {
   
 }
 
-Array(200).fill().forEach(addStar)
+Array(200).fill().forEach(addStar)*/
 
 var t = 0;
 
