@@ -15,3 +15,9 @@ Array(200).fill().forEach(addStar)*/
 //Adds a Pointlight and set its Position
   /*const pointLight = new THREE.PointLight(0xffffff)
   pointLight.position.set(5,25,5)*/
+
+function addAtom() {
+  const geometry = new THREE.SphereGeometry(5, 25,25);
+  const material = new THREE.MeshStandardMaterial( { color: 0x0006FF} )
+  const nukleon = new THREE.Mesh( geometry, material);
+}
