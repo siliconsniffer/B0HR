@@ -2,82 +2,65 @@ import './style.css'
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({
-  canvas: document.querySelector('#bg'),
-});
+//envireoment
+  const scene = new THREE.Scene();
+  // sets new camera and engine (webGL)
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({
+    canvas: document.querySelector('#bg'),
+  });
+  
+  //light
+  const ambientLight = new THREE.AmbientLight(0xffffff)
+  scene.add(ambientLight)
+  
+  //settings for rendering
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  renderer.toneMapping = THREE.ACESFilmicToneMapping
+  
+  // camera positioning
+  camera.position.setZ(30);
+  
+  //render
+  renderer.render( scene, camera );
 
-
-renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize( window.innerWidth, window.innerHeight );
-camera.position.setZ(30);
-renderer.render( scene, camera );
-
-//Obama in the middle
-const geometry = new THREE.SphereGeometry( 2.5, 32, 32, 100)
-//const texture = new THREE.TextureLoader().load("obama.png")
-const material = new THREE.MeshStandardMaterial( {color: 0xffffff});
-const sphere = new THREE.Mesh( geometry, material );
-scene.add(sphere)
-
-//Adds a Pointlight and set its Position
-/*const pointLight = new THREE.PointLight(0xffffff)
-pointLight.position.set(5,25,5)*/
-
-
-const ambientLight = new THREE.AmbientLight(0xffffff)
-scene.add(ambientLight, /*pointLight*/)
-
-
-// Points out a Mesh resembling the PointLight and the Grid
-//const lightHelper = new THREE.PointLightHelper(pointLight)
-const gridHelper = new THREE.GridHelper(200, 50);
-scene.add(/*lightHelper,*/ gridHelper)
+  // Points out a Mesh resembling the Grid
+  const gridHelper = new THREE.GridHelper(200, 50);
+  scene.add(gridHelper)
 
 // Adds mouse-controls for the camera
 const controls = new OrbitControls(camera, renderer.domElement);
 
-function addAtom() {
-  const geometry = new THREE.SphereGeometry(5, 25,25);
-  const material = new THREE.MeshStandardMaterial( { color: 0x0006FF} )
-  const nukleon = new THREE.Mesh( geometry, material);
+//Sphere in the middle
+const geometry = new THREE.SphereGeometry( 2.5, 32, 32, 100)
+const material = new THREE.MeshStandardMaterial( {color: 0xffffff, wireframe: true});
+const sphere = new THREE.Mesh( geometry, material);
+scene.add(sphere)
 
-}
+//Sphere in the other
+const geometry1 = new THREE.SphereGeometry( 1, 16, 16, 10)
+const material1 = new THREE.MeshStandardMaterial( {color: 0xffffff});
+const sphere1 = new THREE.Mesh( geometry1, material1);
+scene.add(sphere1)
 
+//Blue Sphere
+const elektronGeo = new THREE.SphereGeometry(3,32,16)
+const elektronMat = new THREE.MeshStandardMaterial({color: 0x0006FF})
+const elektron = new THREE.Mesh( elektronGeo, elektronMat);
 
-  const elektronGeo = new THREE.SphereGeometry(3,32,16)
-  const elektronMat = new THREE.MeshStandardMaterial({color: 0x0006FF})
-  const elektron = new THREE.Mesh( elektronGeo, elektronMat);
-  scene.add(elektron)
+const newElektron = elektron.clone();
+newElektron.position.x = -10;
 
+scene.add(elektron, newElektron);
 
-/*function addStar() {
-  const geometry = new THREE.SphereGeometry(0.25, 25,25);
-  const material = new THREE.MeshStandardMaterial( { color: 0xffffff} )
-  const star = new THREE.Mesh( geometry, material);
-  
-  const [x,y,z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+elektron.position.x = 10;
+sphere1.add(elektron, newElektron);
 
-  star.position.set(x, y, z);
-  scene.add(star)
-  
-}
-
-Array(200).fill().forEach(addStar)*/
-
-var t = 0;
 
 function animate() {
   requestAnimationFrame( animate );
-  t += 0.01;
-  sphere.rotation.x += 0.01;
-  sphere.rotation.y += 0.003;
-  sphere.rotation.z += 0.01
-
-  elektron.position.y = 25*Math.cos(t) + 0;
-  elektron.position.x = 25*Math.cos(t) + 0;
-  elektron.position.z = 25*Math.sin(t) + 0;
+  sphere1.rotateY(0.005);
 
   controls.update();
 
