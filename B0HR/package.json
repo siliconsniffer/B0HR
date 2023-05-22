@@ -9,11 +9,19 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "tailwindcss": "^3.3.2",
     "vite": "^4.2.0"
   },
   "dependencies": {
+    "@react-three/drei": "^9.67.1",
+    "@react-three/fiber": "^8.13.0",
+    "framer-motion": "^10.12.10",
+    "maath": "^0.5.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.11.1",
+    "react-tilt": "^1.0.2",
+    "react-vertical-timeline-component": "^3.6.0",
     "three": "^0.151.3"
   }
 }
