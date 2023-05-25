@@ -1,11 +1,17 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-let mesh, renderer, scene, raycaster, camera, controls;
+let mesh, renderer, scene, clock, raycaster, camera, controls;
+
+let elektrons;
+
+let elektronObj;
 
 let INTERSECTED;
 
 let theta = 0;
+
+let addNewElektron;
 
 const pointer = new THREE.Vector2();
 const radius = 100;
@@ -23,6 +29,7 @@ function init() {
 
     // scene
     scene = new THREE.Scene();
+    clock = new THREE.Clock();
     
     // camera
     camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
@@ -41,6 +48,7 @@ function init() {
     light.position.set( 20,20, 0 );
     scene.add( light );
     
+    elektrons = new THREE.Group();
     // geometry
     const geometry = new THREE.SphereGeometry( 5, 12, 8 );
     
@@ -55,12 +63,31 @@ function init() {
     // mesh
     mesh = new THREE.Mesh( geometry, material );
     scene.add( mesh );
+    
+    addNewElektron = (x,y,z) => {
+      const geometry = new THREE.SphereGeometry(3,32,16)
+      elektronObj = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial({color: 0x0006FF}));
+      elektronObj.position.set(x,y,z);
+      
+      elektrons.add(elektronObj);
+      scene.add(elektrons);
+  }
+
+    addNewElektron(0,0,0)
+    addNewElektron(-10,0,0);
+    addNewElektron(10,0,0);
+    addNewElektron(-20,0,0);
+    addNewElektron(20,0,0);
+    addNewElektron(0,0,20);
+    addNewElektron(0,0,-20);
+
 
     document.addEventListener( 'mousemove', onPointerMove );
 
     window.addEventListener( 'resize', onWindowResize );
     
 }
+
 
 function onWindowResize() {
 
@@ -71,6 +98,7 @@ function onWindowResize() {
 
 }
 
+
 function onPointerMove( event ) {
 
   event.preventDefault();
@@ -79,6 +107,7 @@ function onPointerMove( event ) {
   pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
 }
+
 
 function render() {
 
@@ -92,7 +121,7 @@ function render() {
 
   raycaster.setFromCamera(pointer, camera);
 
-  const intersects = raycaster.intersectObjects(scene.children, false);
+  const intersects = raycaster.intersectObjects(scene.children, true);
 
   if (intersects.length > 0) {
 
@@ -113,16 +142,22 @@ function render() {
     INTERSECTED = null;
 
   }
-
-
+  
   controls.update();
 
   renderer.render(scene, camera);
-
 }
 
 function animate() {
 
+  //time tracking
+  var delta = clock.getDelta();
+  var elapsed = clock.elapsedTime;
+  
+  //sphere position
+  elektronObj.position.x = elektronObj.position.x + Math.sin(elapsed/0.25) * 1;
+  elektronObj.position.z = elektronObj.position.z + Math.cos(elapsed/0.25) * 1;
+  
   requestAnimationFrame( animate );
 
   render();
