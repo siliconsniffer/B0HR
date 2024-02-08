@@ -21,71 +21,71 @@ render();
 
 function init() {
 
-    // renderer
-    renderer = new THREE.WebGLRenderer();
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    renderer.setPixelRatio( window.devicePixelRatio );
-    document.body.appendChild( renderer.domElement );
+  // renderer
+  renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  document.body.appendChild(renderer.domElement);
 
-    // scene
-    scene = new THREE.Scene();
-    clock = new THREE.Clock();
-    
-    // camera
-    camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
-    camera.position.set( 20, 20, 20 );
+  // scene
+  scene = new THREE.Scene();
+  clock = new THREE.Clock();
 
-    raycaster = new THREE.Raycaster();
-    
-    // controls
-    controls = new OrbitControls( camera, renderer.domElement );
-    
-    // ambient
-    scene.add( new THREE.AmbientLight( 0x222222 ) );
-    
-    // light
-    const light = new THREE.DirectionalLight( 0xffffff, 1 );
-    light.position.set( 20,20, 0 );
-    scene.add( light );
-    
-    elektrons = new THREE.Group();
-    // geometry
-    const geometry = new THREE.SphereGeometry( 5, 12, 8 );
-    
-    // material
-    const material = new THREE.MeshStandardMaterial( {
-        color: 0x00ffff, 
-        flatShading: true,
-        transparent: true,
-        opacity: 0.7,
-    } );
-    
-    // mesh
-    mesh = new THREE.Mesh( geometry, material );
-    scene.add( mesh );
-    
-    addNewElektron = (x,y,z) => {
-      const geometry = new THREE.SphereGeometry(3,32,16)
-      elektronObj = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial({color: 0x0006FF}));
-      elektronObj.position.set(x,y,z);
-      
-      elektrons.add(elektronObj);
-      scene.add(elektrons);
+  // camera
+  camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 10000);
+  camera.position.set(20, 20, 20);
+
+  raycaster = new THREE.Raycaster();
+
+  // controls
+  controls = new OrbitControls(camera, renderer.domElement);
+
+  // ambient
+  scene.add(new THREE.AmbientLight(0x222222));
+
+  // light
+  const light = new THREE.DirectionalLight(0xffffff, 1);
+  light.position.set(20, 20, 0);
+  scene.add(light);
+
+  elektrons = new THREE.Group();
+  // geometry
+  const geometry = new THREE.SphereGeometry(5, 12, 8);
+
+  // material
+  const material = new THREE.MeshStandardMaterial({
+    color: 0x00ffff,
+    flatShading: true,
+    transparent: true,
+    opacity: 0.7,
+  });
+
+  // mesh
+  mesh = new THREE.Mesh(geometry, material);
+  scene.add(mesh);
+
+  addNewElektron = (x, y, z) => {
+    const geometry = new THREE.SphereGeometry(3, 32, 16)
+    elektronObj = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({ color: 0x0006FF }));
+    elektronObj.position.set(x, y, z);
+
+    elektrons.add(elektronObj);
+    scene.add(elektrons);
   }
 
-    addNewElektron(0,0,0)
-    addNewElektron(-10,0,0);
-    addNewElektron(10,0,0);
-    addNewElektron(-20,0,0);
-    addNewElektron(20,0,0);
-    addNewElektron(0,0,20);
-    addNewElektron(0,0,-20);
+  addNewElektron(0, 0, 0)
+  addNewElektron(-10, 0, 0);
+  addNewElektron(10, 0, 0);
+  addNewElektron(-20, 0, 0);
+  addNewElektron(20, 0, 0);
+  addNewElektron(0, 0, 20);
+  addNewElektron(0, 0, -20);
 
 
-    document.addEventListener( 'mousemove', onPointerMove );
+  document.addEventListener('mousemove', onPointerMove);
 
-    window.addEventListener( 'resize', onWindowResize );
-    
+  window.addEventListener('resize', onWindowResize);
+
 }
 
 
@@ -94,17 +94,17 @@ function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
 
-  renderer.setSize( window.innerWidth, window.innerHeight );
+  renderer.setSize(window.innerWidth, window.innerHeight);
 
 }
 
 
-function onPointerMove( event ) {
+function onPointerMove(event) {
 
   event.preventDefault();
 
-  pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-  pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+  pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+  pointer.y = - (event.clientY / window.innerHeight) * 2 + 1;
 
 }
 
@@ -142,7 +142,7 @@ function render() {
     INTERSECTED = null;
 
   }
-  
+
   controls.update();
 
   renderer.render(scene, camera);
@@ -153,12 +153,12 @@ function animate() {
   //time tracking
   var delta = clock.getDelta();
   var elapsed = clock.elapsedTime;
-  
+
   //sphere position
-  elektronObj.position.x = elektronObj.position.x + Math.sin(elapsed/0.25) * 1;
-  elektronObj.position.z = elektronObj.position.z + Math.cos(elapsed/0.25) * 1;
-  
-  requestAnimationFrame( animate );
+  elektronObj.position.x = elektronObj.position.x + Math.sin(elapsed / 0.25) * 1;
+  elektronObj.position.z = elektronObj.position.z + Math.cos(elapsed / 0.25) * 1;
+
+  requestAnimationFrame(animate);
 
   render();
 
