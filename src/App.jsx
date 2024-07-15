@@ -6,26 +6,31 @@ import "./App.css";
 const Sphere = ({ position, size, color }) => {
   const ref = useRef();
   const [active, setActive] = useState(false);
+  const [hover, setHover] = useState(false);
 
   useFrame((state, delta) => {
-    ref.current.rotation.z += delta;
-    ref.current.rotation.y += 0.5 * delta;
+    const speed = setActive ? 5 : 1;
+    ref.current.rotation.z += delta * speed;
+    ref.current.rotation.y += delta * speed;
     ref.current.position.x = Math.sin(state.clock.elapsedTime) * Math.PI * 0.75;
-    ref.current.position.z =
-      Math.cos(state.clock.elapsedTime * 0.5) * Math.PI * 0.75;
-    ref.current.position.y =
-      Math.cos(state.clock.elapsedTime * 0.5) * Math.PI * 0.75;
+    ref.current.position.z = Math.cos(state.clock.elapsedTime) * Math.PI * 0.75;
+    ref.current.position.y = Math.sin(state.clock.elapsedTime) * Math.PI * 0.5;
     // console.log(state.clock.elapsedTime);
   });
   return (
-    <Trail width={0.2} color={"gray"} length={67} decay={1} local={false}>
+    <Trail width={0.25} color={"gray"} length={67} decay={1} local={false}>
       <mesh
         position={position}
         ref={ref}
         onClick={(event) => setActive(!active)}
+        onPointerEnter={(hover) => (hover.stopPropagation(), setHover(true))}
+        onPointerLeave={() => setHover(false)}
       >
         <sphereGeometry args={size} />
-        <meshStandardMaterial color={active ? "hotpink" : color} wireframe />
+        <meshStandardMaterial
+          color={active ? "hotpink" : hover ? "red" : color}
+          wireframe
+        />
       </mesh>
     </Trail>
   );
