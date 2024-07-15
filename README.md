@@ -1,16 +1,8 @@
-# B0HR
+# React + Vite
 
-My attempt on creating a threeJS website explaining Bohr's atomic modell.
-Created as a school project in April 2023, this is inconsistantly getting updates and polishes.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-### Setup
+Currently, two official plugins are available:
 
-Run:
-```npm install```
-to install dependencies.
-
-And then:
-```npx vite```
-to start.
-
-You can then open the displayed address to open it in your webbrowser.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
